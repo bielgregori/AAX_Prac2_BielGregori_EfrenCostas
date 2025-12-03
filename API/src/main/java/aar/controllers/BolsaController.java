@@ -70,6 +70,13 @@ public class BolsaController {
             throw new NotFoundException("Bolsa not found with id " + id);
         }
 
+        // Verificar que no tenga empresas antes de eliminar
+        if (existing.getEmpresas() != null && !existing.getEmpresas().isEmpty()) {
+            return Response.status(Response.Status.CONFLICT)
+                    .entity("No se puede eliminar la bolsa porque tiene empresas asociadas")
+                    .build();
+        }
+
         bolsaService.deleteBolsa(id);
         return Response.noContent().build();
     }

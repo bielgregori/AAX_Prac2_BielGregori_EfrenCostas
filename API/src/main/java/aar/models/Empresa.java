@@ -81,6 +81,7 @@ public class Empresa {
         this.precioAccion = precioAccion; 
     }
 
+
     public Bolsa getBolsa() {
         return bolsa;
     }
