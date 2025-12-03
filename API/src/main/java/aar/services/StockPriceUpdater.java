@@ -29,6 +29,7 @@ public class StockPriceUpdater {
             }
         });
 
+        thread.setName("StockPriceUpdater");
         thread.start();
     }
 

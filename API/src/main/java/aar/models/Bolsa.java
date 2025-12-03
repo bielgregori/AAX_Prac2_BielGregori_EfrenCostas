@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import jakarta.json.bind.annotation.JsonbTransient;
 
 @JsonbPropertyOrder({ "id", "nombreBolsa", "empresas" })
 
@@ -54,6 +55,7 @@ public class Bolsa {
       this.nombreBolsa = nombreBolsa;
    }
 
+   @JsonbTransient
    public List<Empresa> getEmpresas() {
       return empresas;
    }

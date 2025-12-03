@@ -81,7 +81,6 @@ public class Empresa {
         this.precioAccion = precioAccion; 
     }
 
-    @JsonbTransient
     public Bolsa getBolsa() {
         return bolsa;
     }
