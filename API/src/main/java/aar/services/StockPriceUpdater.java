@@ -37,7 +37,7 @@ public class StockPriceUpdater {
 
         for (Empresa emp : empresas) {
             double old = emp.getPrecioAccion();
-            double change = random.nextDouble() * 0.1 - 0.05;
+            double change = random.nextDouble() * 10 - 5;
             double nuevo = old + change;
 
             if (nuevo < 1) nuevo = 1;

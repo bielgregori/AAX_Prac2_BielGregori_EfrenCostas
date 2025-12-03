@@ -1,18 +1,18 @@
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\RestApplication.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\models\Bolsa.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\repository\UserDaoImpl.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\services\UserDaoInterface.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\controllers\UserController.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\repository\JpaExecutor.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\services\EmpresaService.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\services\BolsaDaoInterface.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\models\Empresa.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\services\StockPriceUpdater.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\models\User.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\controllers\BolsaController.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\repository\EmpresaDaoImpl.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\services\UserService.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\controllers\EmpresaController.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\services\EmpresaDaoInterface.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\services\BolsaService.java
-c:\Users\usuari\OneDrive - URV\Documentos\UNI\3r curs\Arquitectures per a aplicacions en xarxa\restwsexample\src\main\java\aar\repository\BolsaDaoImpl.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\controllers\BolsaController.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\controllers\EmpresaController.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\models\Bolsa.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\controllers\UserController.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\repository\BolsaDaoImpl.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\repository\JpaExecutor.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\services\BolsaService.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\models\Empresa.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\models\User.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\services\BolsaDaoInterface.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\services\UserService.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\services\StockPriceUpdater.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\repository\EmpresaDaoImpl.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\repository\UserDaoImpl.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\services\EmpresaDaoInterface.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\RestApplication.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\services\EmpresaService.java
+c:\Users\deim\Desktop\AAX_Prac2_BielGregori_EfrenCostas\API\src\main\java\aar\services\UserDaoInterface.java
