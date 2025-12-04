@@ -43,7 +43,13 @@ public class EmpresaDaoImpl implements EmpresaDaoInterface{
     public void delete(Long id) {
         JpaExecutor.executeInTransaction(em -> {
             Empresa empresa = em.find(Empresa.class, id);
+            
             if (empresa != null) {
+                Bolsa bolsa = empresa.getBolsa();
+                if (bolsa != null) {
+                    bolsa.getEmpresas().remove(empresa);
+                    empresa.setBolsa(null);
+                }
                 em.remove(empresa);
             }
             return null;
