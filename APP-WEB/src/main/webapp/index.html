@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+
+        <div class="wrapper">
+            <h1>Java Websocket Home</h1>
+            <p>Welcome to the Java WebSocket Home. Click the Add a device button to start adding devices.</p>
+            <br />
+            <div class="addDevice">
+                <div class="button"> <a href="#">Add a device</a> </div>
+                <form class="addDeviceForm">
+                    <h3>Add a new device</h3>
+                    <span>Name: <input type="text" name="device_name" id="device_name"></span>
+                    <span>Type: 
+                        <select name="device_type" id="device_type">
+                            <option value="Appliance">Appliance</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Lights">Lights</option>
+                            <option value="Other">Other</option>
+                        </select></span>
+
+                    <span>Description:<br />
+                        <textarea name="description" id="device_description" rows="2" cols="50"></textarea>
+                    </span>
+
+                    <input id="add_button" type="button" class="button" value="Add">
+                    <input id="cancel_button" type="button" class="button" value="Cancel">
+                </form>
+            </div>
+            <br />
+            <h3>Currently connected devices:</h3>
+            <div class="content">
+            </div>
+        </div>
+
+		<script src="websocket.js"></script>
+    </body>
+</html>
