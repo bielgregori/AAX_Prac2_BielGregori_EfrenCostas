@@ -120,13 +120,24 @@ public class EmpresaSessionHandler {
      * Añade una empresa al seguimiento
      */
     public void seguirEmpresa(Long empresaId) {
+        System.out.println("[DEBUG] Solicitud para seguir empresa ID: " + empresaId);
+        System.out.println("[DEBUG] Sesiones conectadas: " + sessions.size());
+        
         if (!empresasDisponibles.containsKey(empresaId)) {
+            System.out.println("[ERROR] Empresa no encontrada en disponibles: " + empresaId);
             return;
         }
 
         if (empresasEnSeguimiento.add(empresaId)) {
             Empresa empresa = empresasDisponibles.get(empresaId);
             empresa.setEnSeguimiento(true);
+            
+            // Actualizar precio antes de enviar
+            Empresa empresaActualizada = EmpresaApiService.obtenerEmpresaPorId(empresaId);
+            if (empresaActualizada != null) {
+                empresa.setPrecioAccion(empresaActualizada.getPrecioAccion());
+                empresa.actualizarFecha();
+            }
             
             JsonProvider provider = JsonProvider.provider();
             JsonObject mensaje = provider.createObjectBuilder()
@@ -138,9 +149,14 @@ public class EmpresaSessionHandler {
                 .add("ultimaActualizacion", empresa.getUltimaActualizacion())
                 .build();
             
+            System.out.println("[DEBUG] Enviando mensaje 'seguir' a todos los clientes: " + mensaje.toString());
+            
+            // Enviar a TODOS los clientes conectados
             sendToAllConnectedSessions(mensaje);
             
-            System.out.println("Empresa " + empresa.getNombreEmpresa() + " añadida al seguimiento");
+            System.out.println("[SUCCESS] Empresa " + empresa.getNombreEmpresa() + " añadida al seguimiento para TODOS los clientes");
+        } else {
+            System.out.println("[INFO] Empresa " + empresaId + " ya estaba en seguimiento");
         }
     }
 
@@ -152,17 +168,20 @@ public class EmpresaSessionHandler {
             Empresa empresa = empresasDisponibles.get(empresaId);
             if (empresa != null) {
                 empresa.setEnSeguimiento(false);
+                
+                JsonProvider provider = JsonProvider.provider();
+                JsonObject mensaje = provider.createObjectBuilder()
+                    .add("action", "dejar-seguir")
+                    .add("id", empresaId)
+                    .add("nombreEmpresa", empresa.getNombreEmpresa())
+                    .add("icono", empresa.getIcono() != null ? empresa.getIcono() : "")
+                    .build();
+                
+                // Enviar a TODOS los clientes conectados
+                sendToAllConnectedSessions(mensaje);
+                
+                System.out.println("Empresa " + empresa.getNombreEmpresa() + " eliminada del seguimiento para TODOS los clientes");
             }
-            
-            JsonProvider provider = JsonProvider.provider();
-            JsonObject mensaje = provider.createObjectBuilder()
-                .add("action", "dejar-seguir")
-                .add("id", empresaId)
-                .build();
-            
-            sendToAllConnectedSessions(mensaje);
-            
-            System.out.println("Empresa " + empresaId + " eliminada del seguimiento");
         }
     }
 
@@ -171,16 +190,19 @@ public class EmpresaSessionHandler {
      */
     private void enviarListadoEmpresas(Session session) {
         for (Empresa empresa : empresasDisponibles.values()) {
-            JsonProvider provider = JsonProvider.provider();
-            JsonObject mensaje = provider.createObjectBuilder()
-                .add("action", "empresa-disponible")
-                .add("id", empresa.getId())
-                .add("nombreEmpresa", empresa.getNombreEmpresa())
-                .add("icono", empresa.getIcono() != null ? empresa.getIcono() : "")
-                .add("enSeguimiento", empresa.isEnSeguimiento())
-                .build();
-            
-            sendToSession(session, mensaje);
+            // NO enviar como disponible si está en seguimiento
+            if (!empresasEnSeguimiento.contains(empresa.getId())) {
+                JsonProvider provider = JsonProvider.provider();
+                JsonObject mensaje = provider.createObjectBuilder()
+                    .add("action", "empresa-disponible")
+                    .add("id", empresa.getId())
+                    .add("nombreEmpresa", empresa.getNombreEmpresa())
+                    .add("icono", empresa.getIcono() != null ? empresa.getIcono() : "")
+                    .add("enSeguimiento", false)
+                    .build();
+                
+                sendToSession(session, mensaje);
+            }
         }
     }
 
@@ -219,10 +241,14 @@ public class EmpresaSessionHandler {
     /**
      * Envía un mensaje a todas las sesiones conectadas
      */
-    private void sendToAllConnectedSessions(JsonObject message) {  
+    private void sendToAllConnectedSessions(JsonObject message) {
+        System.out.println("[DEBUG] Enviando mensaje a " + sessions.size() + " sesiones");
+        int count = 0;
         for (Session session : sessions) {
             sendToSession(session, message);
+            count++;
         }
+        System.out.println("[DEBUG] Mensaje enviado a " + count + " sesiones");
     }
 
     /**
@@ -232,9 +258,13 @@ public class EmpresaSessionHandler {
         try {
             if (session.isOpen()) {
                 session.getBasicRemote().sendText(message.toString());
+                System.out.println("[DEBUG] Mensaje enviado a sesión " + session.getId() + ": " + message.toString());
+            } else {
+                System.out.println("[WARN] Sesión cerrada, no se puede enviar: " + session.getId());
             }
         } catch (IOException ex) {
             sessions.remove(session);
+            System.out.println("[ERROR] Error enviando mensaje a sesión " + session.getId());
             Logger.getLogger(EmpresaSessionHandler.class.getName())
                 .log(Level.SEVERE, "Error enviando mensaje a sesión", ex);
         }

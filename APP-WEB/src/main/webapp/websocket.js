@@ -41,17 +41,79 @@ function connectWebSocket() {
 function onMessage(event) {
     const message = JSON.parse(event.data);
     console.log("Mensaje recibido:", message);
+    console.log("[DEBUG] Action recibida:", message.action);
     
     if (message.action === "empresa-disponible") {
+        console.log("[DEBUG] Procesando empresa-disponible");
         agregarEmpresaDisponible(message);
     } else if (message.action === "actualizar-precio") {
+        console.log("[DEBUG] Procesando actualizar-precio");
         actualizarPrecioEmpresa(message);
+    } else if (message.action === "seguir") {
+        console.log("[DEBUG] Procesando SEGUIR - llamando a moverAEmpresaSeguimiento");
+        // Mover empresa de disponibles a seguimiento para TODOS los clientes
+        moverAEmpresaSeguimiento(message);
+    } else if (message.action === "dejar-seguir") {
+        console.log("[DEBUG] Procesando dejar-seguir");
+        // Mover empresa de seguimiento a disponibles para TODOS los clientes
+        moverAEmpresaDisponible(message);
+    } else {
+        console.log("[WARN] Action desconocida:", message.action);
+    }
+}
+
+function moverAEmpresaSeguimiento(message) {
+    console.log("[DEBUG] Ejecutando moverAEmpresaSeguimiento para empresa:", message.id, message);
+    
+    // Eliminar de disponibles si existe
+    const empresaDisponible = document.getElementById('disponible-' + message.id);
+    if (empresaDisponible) {
+        console.log("[DEBUG] Eliminando empresa de disponibles:", message.id);
+        empresaDisponible.remove();
+    } else {
+        console.log("[DEBUG] Empresa no estaba en disponibles:", message.id);
+    }
+    
+    // Añadir a seguimiento si no existe ya
+    const empresaSeguimiento = document.getElementById('seguimiento-' + message.id);
+    if (!empresaSeguimiento) {
+        console.log("[DEBUG] Añadiendo empresa a seguimiento:", message.id);
+        agregarEmpresaSeguimiento(message);
+    } else {
+        console.log("[DEBUG] Empresa ya estaba en seguimiento:", message.id);
+    }
+}
+
+function moverAEmpresaDisponible(message) {
+    // Eliminar de seguimiento si existe
+    const empresaSeguimiento = document.getElementById('seguimiento-' + message.id);
+    if (empresaSeguimiento) {
+        empresaSeguimiento.remove();
+        
+        // Mostrar mensaje si no hay empresas
+        if (listaSeguimiento.children.length === 0) {
+            listaSeguimiento.innerHTML = '<p class="mensaje-vacio">No hay empresas en seguimiento. Selecciona una empresa de la lista superior.</p>';
+        }
+    }
+    
+    // Añadir a disponibles si no existe ya
+    const empresaDisponible = document.getElementById('disponible-' + message.id);
+    if (!empresaDisponible) {
+        const empresaData = {
+            id: message.id,
+            nombreEmpresa: message.nombreEmpresa,
+            icono: message.icono,
+            enSeguimiento: false
+        };
+        agregarEmpresaDisponible(empresaData);
     }
 }
 
 function agregarEmpresaDisponible(message) {
-    // Verificar si ya existe o está en seguimiento
-    if (document.getElementById('disponible-' + message.id) || message.enSeguimiento) {
+    // Verificar si ya existe en disponibles o en seguimiento
+    if (document.getElementById('disponible-' + message.id) || 
+        document.getElementById('seguimiento-' + message.id) || 
+        message.enSeguimiento) {
         return;
     }
     
@@ -83,20 +145,6 @@ function seguirEmpresa(empresaId) {
     };
     
     socket.send(JSON.stringify(message));
-    
-    // Mover la empresa de disponibles a seguimiento
-    const empresaDisponible = document.getElementById('disponible-' + empresaId);
-    if (empresaDisponible) {
-        const empresaData = {
-            id: empresaId,
-            nombreEmpresa: empresaDisponible.querySelector('.empresa-nombre').textContent,
-            icono: empresaDisponible.querySelector('.empresa-info span:nth-child(1)').textContent.replace('Icono: ', ''),
-            precioAccion: 0
-        };
-        
-        empresaDisponible.remove();
-        agregarEmpresaSeguimiento(empresaData);
-    }
 }
 
 function dejarSeguirEmpresa(empresaId) {
@@ -108,25 +156,6 @@ function dejarSeguirEmpresa(empresaId) {
     };
     
     socket.send(JSON.stringify(message));
-    
-    // Mover la empresa de seguimiento a disponibles
-    const empresaSeguimiento = document.getElementById('seguimiento-' + empresaId);
-    if (empresaSeguimiento) {
-        const empresaData = {
-            id: empresaId,
-            nombreEmpresa: empresaSeguimiento.querySelector('.empresa-nombre').textContent,
-            icono: empresaSeguimiento.querySelector('.empresa-info span:nth-child(1)').textContent.replace('Icono: ', ''),
-            enSeguimiento: false
-        };
-        
-        empresaSeguimiento.remove();
-        agregarEmpresaDisponible(empresaData);
-        
-        // Mostrar mensaje si no hay empresas
-        if (listaSeguimiento.children.length === 0) {
-            listaSeguimiento.innerHTML = '<p class="mensaje-vacio">No hay empresas en seguimiento. Selecciona una empresa de la lista superior.</p>';
-        }
-    }
 }
 
 function agregarEmpresaSeguimiento(message) {
