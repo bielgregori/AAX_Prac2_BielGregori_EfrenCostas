@@ -14,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
-import jakarta.json.bind.annotation.JsonbTransient;
 
 @JsonbPropertyOrder({ "id", "nombreEmpresa", "icono", "precioAccion", "ultimaActualizacion" })
 

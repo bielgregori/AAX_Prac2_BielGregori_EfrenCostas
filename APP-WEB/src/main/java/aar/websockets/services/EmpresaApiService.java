@@ -16,10 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Servicio para obtener datos de la API REST
- * Llama a http://localhost:8080/restwsexample/api/empresa
- */
+
 public class EmpresaApiService {
     
     private static final String API_BASE_URL = "http://localhost:8080/restwsexample/api";
