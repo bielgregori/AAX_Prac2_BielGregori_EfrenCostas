@@ -41,46 +41,29 @@ function connectWebSocket() {
 function onMessage(event) {
     const message = JSON.parse(event.data);
     console.log("Mensaje recibido:", message);
-    console.log("[DEBUG] Action recibida:", message.action);
     
     if (message.action === "empresa-disponible") {
-        console.log("[DEBUG] Procesando empresa-disponible");
         agregarEmpresaDisponible(message);
     } else if (message.action === "actualizar-precio") {
-        console.log("[DEBUG] Procesando actualizar-precio");
         actualizarPrecioEmpresa(message);
     } else if (message.action === "seguir") {
-        console.log("[DEBUG] Procesando SEGUIR - llamando a moverAEmpresaSeguimiento");
-        // Mover empresa de disponibles a seguimiento para TODOS los clientes
         moverAEmpresaSeguimiento(message);
     } else if (message.action === "dejar-seguir") {
-        console.log("[DEBUG] Procesando dejar-seguir");
-        // Mover empresa de seguimiento a disponibles para TODOS los clientes
         moverAEmpresaDisponible(message);
-    } else {
-        console.log("[WARN] Action desconocida:", message.action);
     }
 }
 
 function moverAEmpresaSeguimiento(message) {
-    console.log("[DEBUG] Ejecutando moverAEmpresaSeguimiento para empresa:", message.id, message);
-    
     // Eliminar de disponibles si existe
     const empresaDisponible = document.getElementById('disponible-' + message.id);
     if (empresaDisponible) {
-        console.log("[DEBUG] Eliminando empresa de disponibles:", message.id);
         empresaDisponible.remove();
-    } else {
-        console.log("[DEBUG] Empresa no estaba en disponibles:", message.id);
     }
     
     // Añadir a seguimiento si no existe ya
     const empresaSeguimiento = document.getElementById('seguimiento-' + message.id);
     if (!empresaSeguimiento) {
-        console.log("[DEBUG] Añadiendo empresa a seguimiento:", message.id);
         agregarEmpresaSeguimiento(message);
-    } else {
-        console.log("[DEBUG] Empresa ya estaba en seguimiento:", message.id);
     }
 }
 
