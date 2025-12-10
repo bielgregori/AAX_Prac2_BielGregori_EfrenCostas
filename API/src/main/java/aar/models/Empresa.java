@@ -9,12 +9,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import jakarta.json.bind.annotation.JsonbTransient;
 
-@JsonbPropertyOrder({ "id", "nombreEmpresa", "icono", "precioAccion" })
+@JsonbPropertyOrder({ "id", "nombreEmpresa", "icono", "precioAccion", "ultimaActualizacion" })
 
 @Entity
 @Table(name = "`empresa`") // Escapado por si 'empresa' fuera reservado en H2
@@ -32,6 +34,9 @@ public class Empresa {
 
     @Column(name = "precioAccion")
     private Double precioAccion;
+
+    @Column(name = "ultimaActualizacion")
+    private String ultimaActualizacion;
 
     @ManyToOne
     @JoinColumn(name = "bolsa_id")
@@ -78,10 +83,24 @@ public class Empresa {
     }
 
     public void setPrecioAccion(Double precioAccion) { 
-        this.precioAccion = precioAccion; 
+        this.precioAccion = precioAccion;
+        actualizarFechaHora();
     }
 
+    public String getUltimaActualizacion() {
+        return ultimaActualizacion;
+    }
 
+    public void setUltimaActualizacion(String ultimaActualizacion) {
+        this.ultimaActualizacion = ultimaActualizacion;
+    }
+
+    private void actualizarFechaHora() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        this.ultimaActualizacion = LocalDateTime.now().format(formatter);
+    }
+
+    @JsonbTransient
     public Bolsa getBolsa() {
         return bolsa;
     }

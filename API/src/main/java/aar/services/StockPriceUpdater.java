@@ -37,15 +37,26 @@ public class StockPriceUpdater {
         List<Empresa> empresas = empresaDao.findAll();
 
         for (Empresa emp : empresas) {
-            double old = emp.getPrecioAccion();
-            double change = random.nextDouble() * 10 - 5;
-            double nuevo = old + change;
+            double precioActual = emp.getPrecioAccion();
+            
+            // Generar variación aleatoria entre -5 y +5 euros
+            double variacion = (random.nextDouble() * 10.0) - 5.0;
+            double nuevoPrecio = precioActual + variacion;
 
-            if (nuevo < 1) nuevo = 1;
-            if (nuevo > 100) nuevo = 100;
+            // Mantener el precio dentro del rango [1, 100]
+            if (nuevoPrecio < 1.0) {
+                nuevoPrecio = 1.0;
+            } else if (nuevoPrecio > 100.0) {
+                nuevoPrecio = 100.0;
+            }
 
-            emp.setPrecioAccion(nuevo);
+            emp.setPrecioAccion(nuevoPrecio);
             empresaDao.update(emp);
+            
+            System.out.println("Precio actualizado: " + emp.getNombreEmpresa() + 
+                             " | Anterior: " + String.format("%.2f", precioActual) + 
+                             " | Variación: " + String.format("%.2f", variacion) + 
+                             " | Nuevo: " + String.format("%.2f", nuevoPrecio));
         }
     }
 }

@@ -4,8 +4,6 @@ import aar.models.Bolsa;
 import aar.models.Empresa;
 import aar.services.BolsaService;
 import aar.services.EmpresaDaoInterface;
-import aar.services.StockPriceUpdater;
-
 import java.util.List;
 
 public class EmpresaDaoImpl implements EmpresaDaoInterface{
@@ -80,6 +78,5 @@ public class EmpresaDaoImpl implements EmpresaDaoInterface{
             bolsa3.agregarEmpresa(e3);
             create(e3);
         }
-        new StockPriceUpdater(this);
     }
 }
