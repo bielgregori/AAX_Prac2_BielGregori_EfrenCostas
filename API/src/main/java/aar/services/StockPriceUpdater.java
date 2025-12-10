@@ -52,11 +52,6 @@ public class StockPriceUpdater {
 
             emp.setPrecioAccion(nuevoPrecio);
             empresaDao.update(emp);
-            
-            System.out.println("Precio actualizado: " + emp.getNombreEmpresa() + 
-                             " | Anterior: " + String.format("%.2f", precioActual) + 
-                             " | Variación: " + String.format("%.2f", variacion) + 
-                             " | Nuevo: " + String.format("%.2f", nuevoPrecio));
         }
     }
 }

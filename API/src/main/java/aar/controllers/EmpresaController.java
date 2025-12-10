@@ -42,7 +42,7 @@ public class EmpresaController {
     @POST
     @Consumes("application/x-www-form-urlencoded")
     public Response createEmpresa(
-            @FormParam("name") String nombreEmpresa,
+            @FormParam("nombreEmpresa") String nombreEmpresa,
             @FormParam("icono") String icono,
             @FormParam("bolsa_id") Long bolsaId) {
 
