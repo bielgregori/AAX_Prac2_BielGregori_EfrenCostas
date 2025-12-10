@@ -11,12 +11,10 @@ public class EmpresaService {
     private static StockPriceUpdater priceUpdater;
     private static boolean isUpdaterStarted = false;
 
-    //inyeccion de dependencias
     public EmpresaService(EmpresaDaoInterface empresaDao) {
         this.empresaDao = empresaDao;
         empresaDao.init();
         
-        // Inicializar el actualizador de precios solo una vez
         if (!isUpdaterStarted && empresaDao instanceof EmpresaDaoImpl) {
             priceUpdater = new StockPriceUpdater((EmpresaDaoImpl) empresaDao);
             isUpdaterStarted = true;

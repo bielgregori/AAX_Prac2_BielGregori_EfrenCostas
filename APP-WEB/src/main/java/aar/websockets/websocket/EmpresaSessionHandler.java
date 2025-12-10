@@ -16,31 +16,24 @@ import aar.websockets.services.EmpresaApiService;
 
 public class EmpresaSessionHandler {
 
-    // Singleton instance
     private static final EmpresaSessionHandler instance = new EmpresaSessionHandler();
     
     private final Set<Session> sessions = new HashSet<>();
     private final Map<Long, Empresa> empresasDisponibles = new HashMap<>();
     private final Set<Long> empresasEnSeguimiento = new HashSet<>();
     
-    // Actualizador periódico (cada 5 segundos)
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private static final int INTERVALO_ACTUALIZACION = 5; // segundos
+    private static final int INTERVALO_ACTUALIZACION = 5;
 
-    // Constructor privado
     private EmpresaSessionHandler() {
         cargarEmpresasDesdeAPI();
         iniciarActualizacionPeriodica();
     }
 
-    // Método público de acceso al singleton
     public static EmpresaSessionHandler getInstance() {
         return instance;
     }
 
-    /**
-     * Carga las empresas desde la API REST
-     */
     private void cargarEmpresasDesdeAPI() {
         List<Empresa> empresas = EmpresaApiService.obtenerTodasLasEmpresas();
         for (Empresa empresa : empresas) {
@@ -49,9 +42,6 @@ public class EmpresaSessionHandler {
         System.out.println("Cargadas " + empresas.size() + " empresas desde la API");
     }
 
-    /**
-     * Inicia el proceso de actualización periódica
-     */
     private void iniciarActualizacionPeriodica() {
         scheduler.scheduleAtFixedRate(() -> {
             try {
@@ -65,9 +55,6 @@ public class EmpresaSessionHandler {
         System.out.println("Actualizador periódico iniciado (cada " + INTERVALO_ACTUALIZACION + " segundos)");
     }
 
-    /**
-     * Actualiza los precios de las empresas en seguimiento consultando la API
-     */
     private void actualizarPreciosEmpresasEnSeguimiento() {
         if (empresasEnSeguimiento.isEmpty() || sessions.isEmpty()) {
             return;
@@ -83,23 +70,18 @@ public class EmpresaSessionHandler {
                     empresaLocal.setPrecioAccion(empresaActualizada.getPrecioAccion());
                     empresaLocal.actualizarFecha();
                     
-                    // Enviar actualización a todos los clientes
+                    
                     enviarActualizacionEmpresa(empresaLocal);
                 }
             }
         }
     }
 
-    /**
-     * Añade una nueva sesión WebSocket
-     */
     public void addSession(Session session) {
         sessions.add(session);
         
-        // Enviar listado completo de empresas disponibles
         enviarListadoEmpresas(session);
         
-        // Enviar empresas actualmente en seguimiento
         for (Long empresaId : empresasEnSeguimiento) {
             Empresa empresa = empresasDisponibles.get(empresaId);
             if (empresa != null) {
@@ -109,16 +91,11 @@ public class EmpresaSessionHandler {
         }
     }
 
-    /**
-     * Elimina una sesión WebSocket
-     */
+
     public void removeSession(Session session) {
         sessions.remove(session);
     }
 
-    /**
-     * Añade una empresa al seguimiento
-     */
     public void seguirEmpresa(Long empresaId) {
         if (!empresasDisponibles.containsKey(empresaId)) {
             return;
@@ -128,7 +105,6 @@ public class EmpresaSessionHandler {
             Empresa empresa = empresasDisponibles.get(empresaId);
             empresa.setEnSeguimiento(true);
             
-            // Actualizar precio antes de enviar
             Empresa empresaActualizada = EmpresaApiService.obtenerEmpresaPorId(empresaId);
             if (empresaActualizada != null) {
                 empresa.setPrecioAccion(empresaActualizada.getPrecioAccion());
@@ -151,9 +127,6 @@ public class EmpresaSessionHandler {
         }
     }
 
-    /**
-     * Elimina una empresa del seguimiento
-     */
     public void dejarDeSeguirEmpresa(Long empresaId) {
         if (empresasEnSeguimiento.remove(empresaId)) {
             Empresa empresa = empresasDisponibles.get(empresaId);
@@ -168,7 +141,6 @@ public class EmpresaSessionHandler {
                     .add("icono", empresa.getIcono() != null ? empresa.getIcono() : "")
                     .build();
                 
-                // Enviar a TODOS los clientes conectados
                 sendToAllConnectedSessions(mensaje);
                 
                 System.out.println("Empresa " + empresa.getNombreEmpresa() + " eliminada del seguimiento para TODOS los clientes");
@@ -176,12 +148,8 @@ public class EmpresaSessionHandler {
         }
     }
 
-    /**
-     * Envía el listado completo de empresas disponibles a una sesión
-     */
     private void enviarListadoEmpresas(Session session) {
         for (Empresa empresa : empresasDisponibles.values()) {
-            // NO enviar como disponible si está en seguimiento
             if (!empresasEnSeguimiento.contains(empresa.getId())) {
                 JsonProvider provider = JsonProvider.provider();
                 JsonObject mensaje = provider.createObjectBuilder()
@@ -197,9 +165,6 @@ public class EmpresaSessionHandler {
         }
     }
 
-    /**
-     * Envía una empresa a una sesión específica
-     */
     private void enviarEmpresaASesion(Session session, Empresa empresa, String action) {
         JsonProvider provider = JsonProvider.provider();
         JsonObject mensaje = provider.createObjectBuilder()
@@ -214,9 +179,6 @@ public class EmpresaSessionHandler {
         sendToSession(session, mensaje);
     }
 
-    /**
-     * Envía actualización de precio a todos los clientes
-     */
     private void enviarActualizacionEmpresa(Empresa empresa) {
         JsonProvider provider = JsonProvider.provider();
         JsonObject mensaje = provider.createObjectBuilder()
@@ -229,18 +191,12 @@ public class EmpresaSessionHandler {
         sendToAllConnectedSessions(mensaje);
     }
 
-    /**
-     * Envía un mensaje a todas las sesiones conectadas
-     */
     private void sendToAllConnectedSessions(JsonObject message) {
         for (Session session : sessions) {
             sendToSession(session, message);
         }
     }
 
-    /**
-     * Envía un mensaje a una sesión específica
-     */
     private void sendToSession(Session session, JsonObject message) {
         try {
             if (session.isOpen()) {

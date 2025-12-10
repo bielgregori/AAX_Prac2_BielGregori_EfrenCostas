@@ -8,7 +8,6 @@ public class BolsaService {
 
     private final BolsaDaoInterface bolsaDao;
 
-    //inyeccion de dependencias
     public BolsaService(BolsaDaoInterface bolsaDao) {
         this.bolsaDao = bolsaDao;
         bolsaDao.init();

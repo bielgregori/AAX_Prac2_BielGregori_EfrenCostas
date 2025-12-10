@@ -39,11 +39,9 @@ public class StockPriceUpdater {
         for (Empresa emp : empresas) {
             double precioActual = emp.getPrecioAccion();
             
-            // Generar variación aleatoria entre -5 y +5 euros
             double variacion = (random.nextDouble() * 10.0) - 5.0;
             double nuevoPrecio = precioActual + variacion;
 
-            // Mantener el precio dentro del rango [1, 100]
             if (nuevoPrecio < 1.0) {
                 nuevoPrecio = 1.0;
             } else if (nuevoPrecio > 100.0) {

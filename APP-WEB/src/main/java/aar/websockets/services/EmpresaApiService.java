@@ -23,9 +23,6 @@ public class EmpresaApiService {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final Logger logger = Logger.getLogger(EmpresaApiService.class.getName());
 
-    /**
-     * Obtiene todas las empresas de la API REST
-     */
     public static List<Empresa> obtenerTodasLasEmpresas() {
         List<Empresa> empresas = new ArrayList<>();
         
@@ -51,9 +48,6 @@ public class EmpresaApiService {
         return empresas;
     }
 
-    /**
-     * Obtiene una empresa específica por ID
-     */
     public static Empresa obtenerEmpresaPorId(Long id) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
@@ -75,9 +69,6 @@ public class EmpresaApiService {
         return null;
     }
 
-    /**
-     * Parsea el JSON de una lista de empresas
-     */
     private static List<Empresa> parsearEmpresas(String jsonString) {
         List<Empresa> empresas = new ArrayList<>();
         
@@ -93,9 +84,6 @@ public class EmpresaApiService {
         return empresas;
     }
 
-    /**
-     * Parsea el JSON de una empresa individual
-     */
     private static Empresa parsearEmpresa(String jsonString) {
         try (JsonReader reader = Json.createReader(new StringReader(jsonString))) {
             JsonObject jsonEmpresa = reader.readObject();
@@ -103,9 +91,6 @@ public class EmpresaApiService {
         }
     }
 
-    /**
-     * Crea un objeto Empresa desde un JsonObject
-     */
     private static Empresa crearEmpresaDesdeJson(JsonObject jsonEmpresa) {
         Long id = (long) jsonEmpresa.getInt("id");
         String nombre = jsonEmpresa.getString("nombreEmpresa");

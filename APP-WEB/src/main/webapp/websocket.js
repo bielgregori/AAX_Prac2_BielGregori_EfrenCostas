@@ -1,14 +1,10 @@
 window.onload = init;
 
-// DOM elements
 const connectionStatus = document.querySelector('#connection-status');
 const listaDisponibles = document.querySelector('#lista-disponibles');
 const listaSeguimiento = document.querySelector('#lista-seguimiento');
 
-// WebSocket
 let socket;
-
-// FUNCTIONS
 
 function init() {
     connectWebSocket();
@@ -54,13 +50,11 @@ function onMessage(event) {
 }
 
 function moverAEmpresaSeguimiento(message) {
-    // Eliminar de disponibles si existe
     const empresaDisponible = document.getElementById('disponible-' + message.id);
     if (empresaDisponible) {
         empresaDisponible.remove();
     }
     
-    // Añadir a seguimiento si no existe ya
     const empresaSeguimiento = document.getElementById('seguimiento-' + message.id);
     if (!empresaSeguimiento) {
         agregarEmpresaSeguimiento(message);
@@ -68,18 +62,15 @@ function moverAEmpresaSeguimiento(message) {
 }
 
 function moverAEmpresaDisponible(message) {
-    // Eliminar de seguimiento si existe
     const empresaSeguimiento = document.getElementById('seguimiento-' + message.id);
     if (empresaSeguimiento) {
         empresaSeguimiento.remove();
         
-        // Mostrar mensaje si no hay empresas
         if (listaSeguimiento.children.length === 0) {
             listaSeguimiento.innerHTML = '<p class="mensaje-vacio">No hay empresas en seguimiento. Selecciona una empresa de la lista superior.</p>';
         }
     }
     
-    // Añadir a disponibles si no existe ya
     const empresaDisponible = document.getElementById('disponible-' + message.id);
     if (!empresaDisponible) {
         const empresaData = {
@@ -93,7 +84,6 @@ function moverAEmpresaDisponible(message) {
 }
 
 function agregarEmpresaDisponible(message) {
-    // Verificar si ya existe en disponibles o en seguimiento
     if (document.getElementById('disponible-' + message.id) || 
         document.getElementById('seguimiento-' + message.id) || 
         message.enSeguimiento) {
@@ -142,7 +132,6 @@ function dejarSeguirEmpresa(empresaId) {
 }
 
 function agregarEmpresaSeguimiento(message) {
-    // Eliminar mensaje vacío si existe
     const mensajeVacio = listaSeguimiento.querySelector('.mensaje-vacio');
     if (mensajeVacio) {
         mensajeVacio.remove();
@@ -183,7 +172,6 @@ function actualizarPrecioEmpresa(message) {
         
         precioElement.textContent = precioNuevo.toFixed(2) + ' €';
         
-        // Añadir clase para animación según si sube o baja
         const precioActualSpan = empresaSeguimiento.querySelector('.precio-actual');
         precioActualSpan.classList.remove('precio-sube', 'precio-baja');
         
@@ -193,11 +181,9 @@ function actualizarPrecioEmpresa(message) {
             precioActualSpan.classList.add('precio-baja');
         }
         
-        // Actualizar hora
         empresaSeguimiento.querySelector('.ultima-actualizacion').innerHTML = 
             `<b>Última actualización:</b> ${message.ultimaActualizacion}`;
         
-        // Quitar la clase de animación después de 1 segundo
         setTimeout(() => {
             precioActualSpan.classList.remove('precio-sube', 'precio-baja');
         }, 1000);

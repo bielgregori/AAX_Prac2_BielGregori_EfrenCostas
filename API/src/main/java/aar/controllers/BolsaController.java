@@ -16,7 +16,6 @@ public class BolsaController {
     private final BolsaService bolsaService;
 
     public BolsaController() {
-        //Wiring manual
         this.bolsaService = new BolsaService(new BolsaDaoImpl());
     }
 
@@ -47,21 +46,6 @@ public class BolsaController {
         return Response.status(Response.Status.CREATED).entity(bolsa).build();
     }
 
-    /*
-    @PUT
-    @Path("/{id}")
-    public Response updateBolsa(@PathParam("id") Long id, Bolsa bolsa) {
-        Bolsa existing = bolsaService.getBolsaById(id);
-        if (existing == null) {
-            throw new NotFoundException("Bolsa not found with id " + id);
-        }
-
-        existing.setNombreBolsa(bolsa.getNombreBolsa());
-
-        bolsaService.updateBolsa(existing);
-        return Response.ok(existing).build();
-    }
-     */
     @DELETE
     @Path("/{id}")
     public Response deleteBolsa(@PathParam("id") Long id) {
@@ -70,7 +54,6 @@ public class BolsaController {
             throw new NotFoundException("Bolsa not found with id " + id);
         }
 
-        // Verificar que no tenga empresas antes de eliminar
         if (existing.getEmpresas() != null && !existing.getEmpresas().isEmpty()) {
             return Response.status(Response.Status.CONFLICT)
                     .entity("No se puede eliminar la bolsa porque tiene empresas asociadas")

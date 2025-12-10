@@ -29,7 +29,6 @@ public class Empresa {
         this.ultimaActualizacion = LocalDateTime.now().format(formatter);
     }
 
-    // Getters y Setters
     public Long getId() {
         return id;
     }
