@@ -100,7 +100,6 @@ public class Empresa {
         this.ultimaActualizacion = LocalDateTime.now().format(formatter);
     }
 
-    @JsonbTransient
     public Bolsa getBolsa() {
         return bolsa;
     }
