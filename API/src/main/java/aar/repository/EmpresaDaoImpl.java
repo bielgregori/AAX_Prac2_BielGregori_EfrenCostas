@@ -62,21 +62,68 @@ public class EmpresaDaoImpl implements EmpresaDaoInterface{
             Bolsa bolsa1 = bolsaService.getBolsaById(1L);
             Bolsa bolsa2 = bolsaService.getBolsaById(2L);
             Bolsa bolsa3 = bolsaService.getBolsaById(3L);
+            Bolsa bolsa4 = bolsaService.getBolsaById(4L);
+            Bolsa bolsa5 = bolsaService.getBolsaById(5L);
 
-            Empresa e1 = new Empresa("Netflix", "https://images.ctfassets.net/4cd45et68cgf/Rx83JoRDMkYNlMC9MKzcB/2b14d5a59fc3937afd3f03191e19502d/Netflix-Symbol.png?w=700&h=456");
+            Empresa e1 = new Empresa("Netflix", "NFLX");
             e1.setBolsa(bolsa1);
             bolsa1.agregarEmpresa(e1);
             create(e1);
 
-            Empresa e2 = new Empresa("Spotify", "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/1024px-Spotify_logo_without_text.svg.png");
+            Empresa e2 = new Empresa("Spotify", "SPOT");
             e2.setBolsa(bolsa2);
             bolsa2.agregarEmpresa(e2);
             create(e2);
 
-            Empresa e3 = new Empresa("Microsoft", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png");
+            Empresa e3 = new Empresa("Microsoft", "MSFT");
             e3.setBolsa(bolsa3);
             bolsa3.agregarEmpresa(e3);
             create(e3);
+
+            Empresa e4 = new Empresa("Apple", "AAPL");
+            e4.setBolsa(bolsa1);
+            bolsa1.agregarEmpresa(e4);
+            create(e4);
+
+            Empresa e5 = new Empresa("Amazon", "AMZN");
+            e5.setBolsa(bolsa2);
+            bolsa2.agregarEmpresa(e5);
+            create(e5);
+
+            Empresa e6 = new Empresa("Google", "GOOGL");
+            e6.setBolsa(bolsa3);
+            bolsa3.agregarEmpresa(e6);
+            create(e6);
+
+            Empresa e7 = new Empresa("Facebook", "META");
+            e7.setBolsa(bolsa1);
+            bolsa1.agregarEmpresa(e7);
+            create(e7);
+
+            Empresa e8 = new Empresa("Tesla", "TSLA");
+            e8.setBolsa(bolsa2);
+            bolsa2.agregarEmpresa(e8);
+            create(e8);
+
+            Empresa e9 = new Empresa("NVIDIA", "NVDA");
+            e9.setBolsa(bolsa4);
+            bolsa4.agregarEmpresa(e9);
+            create(e9);
+
+            Empresa e10 = new Empresa("Intel", "INTC");
+            e10.setBolsa(bolsa5);
+            bolsa5.agregarEmpresa(e10);
+            create(e10);
+
+            Empresa e11 = new Empresa("IBM", "IBM");
+            e11.setBolsa(bolsa4);
+            bolsa4.agregarEmpresa(e11);
+            create(e11);
+
+            Empresa e12 = new Empresa("Oracle", "ORCL");
+            e12.setBolsa(bolsa5);
+            bolsa5.agregarEmpresa(e12);
+            create(e12);
         }
     }
 }

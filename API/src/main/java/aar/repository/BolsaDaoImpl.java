@@ -50,9 +50,11 @@ public class BolsaDaoImpl implements BolsaDaoInterface{
     @Override
     public void init() {
         if (findAll().isEmpty()) {
-            create(new Bolsa("Tecnologia"));
-            create(new Bolsa("Economia"));
-            create(new Bolsa("Reposteria"));
+            create(new Bolsa("Massachusetts"));
+            create(new Bolsa("New York"));
+            create(new Bolsa("Tokyo"));
+            create(new Bolsa("London"));
+            create(new Bolsa("Brussels"));
         }
     }
 }
