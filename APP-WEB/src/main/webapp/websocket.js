@@ -11,7 +11,9 @@ function init() {
 }
 
 function connectWebSocket() {
-    socket = new WebSocket("ws://localhost:8080/websocketexample/stock-updates");
+    const url = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/websocketexample/stock-updates";
+    console.log("Conectando a WebSocket en:", url);
+    socket = new WebSocket(url);
     
     socket.onopen = function() {
         console.log("Conexión WebSocket establecida");
