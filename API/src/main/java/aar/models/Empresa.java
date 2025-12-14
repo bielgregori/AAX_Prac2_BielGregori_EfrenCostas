@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 
-@JsonbPropertyOrder({ "id", "nombreEmpresa", "icono", "precioAccion", "ultimaActualizacion" })
+@JsonbPropertyOrder({ "id", "nombreEmpresa", "simbolo", "precioAccion", "ultimaActualizacion" })
 
 @Entity
 @Table(name = "`empresa`") // Escapado por si 'empresa' fuera reservado en H2
@@ -28,8 +28,8 @@ public class Empresa {
     @Column(name = "nombreEmpresa")
     private String nombreEmpresa;
 
-    @Column(name = "icono")
-    private String icono;   // URL del icono
+    @Column(name = "simbolo")
+    private String simbolo;   // Símbolo de la empresa
 
     @Column(name = "precioAccion")
     private Double precioAccion;
@@ -43,9 +43,9 @@ public class Empresa {
 
     public Empresa() {}
 
-    public Empresa(String nombreEmpresa, String icono) {
+    public Empresa(String nombreEmpresa, String simbolo) {
         this.nombreEmpresa = nombreEmpresa;
-        this.icono = icono;
+        this.simbolo = simbolo;
         this.precioAccion = generarPrecioInicial();
     }
 
@@ -69,12 +69,12 @@ public class Empresa {
         this.nombreEmpresa = nombreEmpresa; 
     }
 
-    public String getIcono() { 
-        return icono; 
+    public String getSimbolo() { 
+        return simbolo; 
     }
 
-    public void setIcono(String icono) { 
-        this.icono = icono; 
+    public void setSimbolo(String simbolo) { 
+        this.simbolo = simbolo; 
     }
 
     public Double getPrecioAccion() { 

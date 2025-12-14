@@ -7,7 +7,7 @@ public class Empresa {
 
     private Long id;
     private String nombreEmpresa;
-    private String icono;
+    private String simbolo;
     private Double precioAccion;
     private String ultimaActualizacion;
     private boolean enSeguimiento;
@@ -15,10 +15,10 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(Long id, String nombreEmpresa, String icono, Double precioAccion) {
+    public Empresa(Long id, String nombreEmpresa, String simbolo, Double precioAccion) {
         this.id = id;
         this.nombreEmpresa = nombreEmpresa;
-        this.icono = icono;
+        this.simbolo = simbolo;
         this.precioAccion = precioAccion;
         this.enSeguimiento = false;
         actualizarFecha();
@@ -45,12 +45,12 @@ public class Empresa {
         this.nombreEmpresa = nombreEmpresa;
     }
 
-    public String getIcono() {
-        return icono;
+    public String getSimbolo() {
+        return simbolo;
     }
 
-    public void setIcono(String icono) {
-        this.icono = icono;
+    public void setSimbolo(String simbolo) {
+        this.simbolo = simbolo;
     }
 
     public Double getPrecioAccion() {

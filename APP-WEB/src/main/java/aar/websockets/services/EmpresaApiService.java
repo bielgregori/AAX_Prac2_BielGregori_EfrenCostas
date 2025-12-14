@@ -94,10 +94,10 @@ public class EmpresaApiService {
     private static Empresa crearEmpresaDesdeJson(JsonObject jsonEmpresa) {
         Long id = (long) jsonEmpresa.getInt("id");
         String nombre = jsonEmpresa.getString("nombreEmpresa");
-        String icono = jsonEmpresa.getString("icono", "");
+        String simbolo = jsonEmpresa.getString("simbolo", "");
         Double precio = jsonEmpresa.getJsonNumber("precioAccion").doubleValue();
         
-        return new Empresa(id, nombre, icono, precio);
+        return new Empresa(id, nombre, simbolo, precio);
     }
 }
 

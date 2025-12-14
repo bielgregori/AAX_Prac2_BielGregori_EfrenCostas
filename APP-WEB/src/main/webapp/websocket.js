@@ -78,7 +78,7 @@ function moverAEmpresaDisponible(message) {
         const empresaData = {
             id: message.id,
             nombreEmpresa: message.nombreEmpresa,
-            icono: message.icono,
+            simbolo: message.simbolo,
             enSeguimiento: false
         };
         agregarEmpresaDisponible(empresaData);
@@ -100,7 +100,7 @@ function agregarEmpresaDisponible(message) {
     empresaDiv.innerHTML = `
         <div class="empresa-nombre">${message.nombreEmpresa}</div>
         <div class="empresa-info">
-            <span><b>Icono:</b> ${message.icono || '📊'}</span>
+            <span><b>Símbolo:</b> ${message.simbolo || '📊'}</span>
             <span><b>ID:</b> ${message.id}</span>
         </div>
         <div class="empresa-acciones">
@@ -152,7 +152,7 @@ function agregarEmpresaSeguimiento(message) {
     empresaDiv.innerHTML = `
         <div class="empresa-nombre">${message.nombreEmpresa}</div>
         <div class="empresa-info">
-            <span><b>Icono:</b> ${message.icono || '📊'}</span>
+            <span><b>Símbolo:</b> ${message.simbolo || '📊'}</span>
             <span class="precio-actual"><b>Precio actual:</b> <span class="precio">${(message.precioAccion || 0).toFixed(2)} €</span></span>
             <span class="ultima-actualizacion"><b>Última actualización:</b> ${message.ultimaActualizacion || horaActualizacion}</span>
         </div>

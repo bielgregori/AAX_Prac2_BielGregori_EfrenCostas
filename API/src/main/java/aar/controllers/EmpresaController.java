@@ -43,7 +43,7 @@ public class EmpresaController {
     @Consumes("application/x-www-form-urlencoded")
     public Response createEmpresa(
             @FormParam("nombreEmpresa") String nombreEmpresa,
-            @FormParam("icono") String icono,
+            @FormParam("simbolo") String simbolo,
             @FormParam("bolsa_id") Long bolsaId) {
 
         BolsaService bolsaService = new BolsaService(new BolsaDaoImpl());
@@ -53,7 +53,7 @@ public class EmpresaController {
             throw new NotFoundException("Bolsa not found with id " + bolsaId);
         }
 
-        Empresa empresa = new Empresa(nombreEmpresa, icono);
+        Empresa empresa = new Empresa(nombreEmpresa, simbolo);
         empresa.setBolsa(bolsa);
         bolsa.agregarEmpresa(empresa);
         
@@ -70,7 +70,7 @@ public class EmpresaController {
         }
 
         existing.setNombreEmpresa(empresa.getNombreEmpresa());
-        existing.setIcono(empresa.getIcono());
+        existing.setSimbolo(empresa.getSimbolo());
         existing.setPrecioAccion(empresa.getPrecioAccion());
 
         empresaService.updateEmpresa(existing);

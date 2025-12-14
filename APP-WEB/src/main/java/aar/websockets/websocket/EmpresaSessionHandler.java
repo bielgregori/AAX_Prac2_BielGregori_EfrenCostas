@@ -116,7 +116,7 @@ public class EmpresaSessionHandler {
                 .add("action", "seguir")
                 .add("id", empresa.getId())
                 .add("nombreEmpresa", empresa.getNombreEmpresa())
-                .add("icono", empresa.getIcono() != null ? empresa.getIcono() : "")
+                .add("simbolo", empresa.getSimbolo() != null ? empresa.getSimbolo() : "")
                 .add("precioAccion", empresa.getPrecioAccion())
                 .add("ultimaActualizacion", empresa.getUltimaActualizacion())
                 .build();
@@ -138,7 +138,7 @@ public class EmpresaSessionHandler {
                     .add("action", "dejar-seguir")
                     .add("id", empresaId)
                     .add("nombreEmpresa", empresa.getNombreEmpresa())
-                    .add("icono", empresa.getIcono() != null ? empresa.getIcono() : "")
+                    .add("simbolo", empresa.getSimbolo() != null ? empresa.getSimbolo() : "")
                     .build();
                 
                 sendToAllConnectedSessions(mensaje);
@@ -156,7 +156,7 @@ public class EmpresaSessionHandler {
                     .add("action", "empresa-disponible")
                     .add("id", empresa.getId())
                     .add("nombreEmpresa", empresa.getNombreEmpresa())
-                    .add("icono", empresa.getIcono() != null ? empresa.getIcono() : "")
+                    .add("simbolo", empresa.getSimbolo() != null ? empresa.getSimbolo() : "")
                     .add("enSeguimiento", false)
                     .build();
                 
@@ -171,7 +171,7 @@ public class EmpresaSessionHandler {
             .add("action", action)
             .add("id", empresa.getId())
             .add("nombreEmpresa", empresa.getNombreEmpresa())
-            .add("icono", empresa.getIcono() != null ? empresa.getIcono() : "")
+            .add("simbolo", empresa.getSimbolo() != null ? empresa.getSimbolo() : "")
             .add("precioAccion", empresa.getPrecioAccion())
             .add("ultimaActualizacion", empresa.getUltimaActualizacion())
             .build();
