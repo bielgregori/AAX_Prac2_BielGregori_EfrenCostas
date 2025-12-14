@@ -11,7 +11,7 @@ function init() {
 }
 
 function connectWebSocket() {
-    const url = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/websocketexample/stock-updates";
+    const url = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/app-web/stock-updates";
     console.log("Conectando a WebSocket en:", url);
     socket = new WebSocket(url);
     

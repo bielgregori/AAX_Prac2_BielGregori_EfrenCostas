@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class EmpresaApiService {
     
-    private static final String API_BASE_URL = "http://localhost:8080/restwsexample/api";
+    private static final String API_BASE_URL = "http://localhost:8080/app-api/api";
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final Logger logger = Logger.getLogger(EmpresaApiService.class.getName());
 

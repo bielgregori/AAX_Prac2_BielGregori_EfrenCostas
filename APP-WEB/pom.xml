@@ -4,12 +4,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>aar</groupId>
-  <artifactId>websocketexample</artifactId>
+  <groupId>io.github.faob-dev</groupId>
+  <artifactId>app-web</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>websocketexample Maven Webapp</name>
+  <name>app-web Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -39,7 +39,7 @@
 </dependencies>
 
 <build>
-  <finalName>websocketexample</finalName>
+  <finalName>app-web</finalName>
   <plugins>
     <plugin>
       <artifactId>maven-clean-plugin</artifactId>
