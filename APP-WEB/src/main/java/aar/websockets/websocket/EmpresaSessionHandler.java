@@ -45,6 +45,7 @@ public class EmpresaSessionHandler {
     private void iniciarActualizacionPeriodica() {
         scheduler.scheduleAtFixedRate(() -> {
             try {
+                sincronizarEmpresasConAPI();
                 actualizarPreciosEmpresasEnSeguimiento();
             } catch (Exception e) {
                 Logger.getLogger(EmpresaSessionHandler.class.getName())
@@ -53,6 +54,49 @@ public class EmpresaSessionHandler {
         }, INTERVALO_ACTUALIZACION, INTERVALO_ACTUALIZACION, TimeUnit.SECONDS);
         
         System.out.println("Actualizador periódico iniciado (cada " + INTERVALO_ACTUALIZACION + " segundos)");
+    }
+
+    private void sincronizarEmpresasConAPI() {
+        List<Empresa> empresasAPI = EmpresaApiService.obtenerTodasLasEmpresas();
+        
+        // Detectar nuevas empresas
+        for (Empresa empresa : empresasAPI) {
+            if (!empresasDisponibles.containsKey(empresa.getId())) {
+                empresasDisponibles.put(empresa.getId(), empresa);
+                
+                // Notificar a todos los clientes sobre la nueva empresa
+                JsonProvider provider = JsonProvider.provider();
+                JsonObject mensaje = provider.createObjectBuilder()
+                    .add("action", "empresa-disponible")
+                    .add("id", empresa.getId())
+                    .add("nombreEmpresa", empresa.getNombreEmpresa())
+                    .add("simbolo", empresa.getSimbolo() != null ? empresa.getSimbolo() : "")
+                    .add("enSeguimiento", false)
+                    .build();
+                
+                sendToAllConnectedSessions(mensaje);
+                System.out.println("Nueva empresa detectada: " + empresa.getNombreEmpresa());
+            }
+        }
+        
+        // Detectar empresas eliminadas
+        Set<Long> idsAPI = new HashSet<>();
+        for (Empresa empresa : empresasAPI) {
+            idsAPI.add(empresa.getId());
+        }
+        
+        Set<Long> idsEliminadas = new HashSet<>();
+        for (Long idLocal : empresasDisponibles.keySet()) {
+            if (!idsAPI.contains(idLocal)) {
+                idsEliminadas.add(idLocal);
+            }
+        }
+        
+        for (Long idEliminada : idsEliminadas) {
+            empresasDisponibles.remove(idEliminada);
+            empresasEnSeguimiento.remove(idEliminada);
+            System.out.println("Empresa eliminada: " + idEliminada);
+        }
     }
 
     private void actualizarPreciosEmpresasEnSeguimiento() {
